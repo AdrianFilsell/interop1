@@ -8,15 +8,18 @@
 
 bool IInteropDispatchMember::getnames(DISPID* rgDispId,const UINT cNames) const
 {
-	// name + args
-	if( !rgDispId || cNames < ( 1 + m_vParams.size() ) )
+	// name + args, args are optional
+	if( !rgDispId || ( cNames > 1 && cNames < ( 1 + m_vParams.size() ) ) )
 		return false;
 	if( !m_spName )
 		return false;
 	rgDispId[0] = m_spName->getid();
-	auto i = m_vParams.cbegin(), end = m_vParams.cend();
-	for( int nParam = 0 ; i != end ; ++i, ++nParam )
-		rgDispId[1+nParam] = (*i)->getid();
+	if( cNames > 1 )
+	{
+		auto i = m_vParams.crbegin(), end = m_vParams.crend();
+		for( int nParam = 0 ; i != end ; ++i, ++nParam )
+			rgDispId[1+nParam] = (*i)->getid();
+	}
 	return true;
 }
 
@@ -24,9 +27,15 @@ IInteropDispatch::IInteropDispatch()
 {
     m_n = 0;
 	{
-		// members
+		// member name
 		std::shared_ptr<const IInteropDispatchMemberElement> spName { new IInteropDispatchMemberElement( L"InteropMsg", 0 ) };
-		std::shared_ptr<const IInteropDispatchMember> spMember { new IInteropDispatchMember( spName, {} ) };
+		
+		// member args
+		std::shared_ptr<const IInteropDispatchMemberElement> spArg0 { new IInteropDispatchMemberElement( L"MsgName", 1 ) };
+		std::shared_ptr<const IInteropDispatchMemberElement> spArg1 { new IInteropDispatchMemberElement( L"PageID", 2 ) };
+		std::shared_ptr<const IInteropDispatchMember> spMember { new IInteropDispatchMember( spName, {spArg0,spArg1} ) };
+		
+		// store
 		m_vMembers.push_back( spMember );
 	}
 	sort();
