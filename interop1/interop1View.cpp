@@ -168,7 +168,7 @@ int Cinterop1View::OnCreate(LPCREATESTRUCT p)
 	if( n != 0 )
 		return n;
 
-	// create the browser and register this as a valid target
+	// create the browser and register this as a valid target for external member called "InteropMsg"
 	m_spBrowser = std::shared_ptr<CWebBrowser2>(new CWebBrowser2);
 	if( m_spBrowser->Create( nullptr, nullptr, WS_VISIBLE|WS_CHILD, CRect(0,0,0,0), this, AFX_IDW_PANE_FIRST, nullptr ) )
 	{
