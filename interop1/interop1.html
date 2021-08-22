@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<body onload="OnLoad()" style="height:100%;margin:0">
+
+    <h1>The button Element</h1>
+
+    <button id="button1" type="button">Click Me!</button>
+
+    <h1>The paragraph Element</h1>
+
+    <p id="para1">This is a paragraph.</p>
+
+    <h1>The form Element</h1>
+
+    <form action="/action_page.php">
+        <label for="fname">First name:</label>
+        <input type="text" id="fname" name="fname" value="Joe"><br><br>
+        <label for="lname">Last name:</label>
+        <input type="text" id="lname" name="lname" value="Smith"><br><br>
+    </form>
+
+    <script type="text/javascript">
+
+        var pageloaded = false;
+        var pageid = "";
+
+        function OnLoad() {
+
+            var btn = document.getElementById('button1');
+
+            btn.onclick = OnBtnClick;
+
+            pageloaded = true;
+        }
+        function GetPageLoaded() {
+
+            return pageloaded;
+        }
+        function GetPageID() {
+
+            return pageid;
+        }
+        function SetPageID(id) {
+
+            pageid = id;
+        }
+        function OnBtnClick() {
+
+            external.InteropMsg('btnclick', pageid);
+        }
+        function GetBtnText() {
+
+            var el = document.getElementById('button1');
+            return el.innerHTML;
+        }
+        function SetBtnText(sz) {
+
+            var el = document.getElementById('button1');
+            el.innerHTML=sz;
+        }
+        function GetParaText() {
+
+            var el = document.getElementById('para1');
+            return el.innerHTML;
+        }
+        function SetParaText(sz) {
+
+            var el = document.getElementById('para1');
+            el.innerHTML = sz;
+        }
+        function GetForenameText() {
+
+            var el = document.getElementById('fname');
+            return el.value;
+        }
+        function SetForenameText(sz) {
+
+            var el = document.getElementById('fname');
+            el.value = sz;
+        }
+        function GetSurnameText() {
+
+            var el = document.getElementById('lname');
+            return el.value;
+        }
+        function SetSurnameText(sz) {
+
+            var el = document.getElementById('lname');
+            el.value = sz;
+        }
+
+    </script>
+
+</body>
+</html >
