@@ -87,8 +87,14 @@ BOOL Cinterop1App::InitInstance()
 	}
 
 	// Ole support, we need to implement IDispatch which can them be used by a activex control site 'external', this allows javascript in html to use 'external' keyword and our IDispatch implementation will then be called
+	
+	// Our IDispatch implementation that will have its Invoke wired up to the external javascript calls
 	m_spIDispatch = new IInteropDispatch;
+
+	// Our derived control container manager
 	m_spOleCtrlContainerMgr = std::shared_ptr<CInteropOccManager>( new CInteropOccManager( m_spIDispatch ) );
+	
+	// Use our derived manager by setting up the state ptr
 	AfxEnableControlContainer( m_spOleCtrlContainerMgr.get() );
 
 	EnableTaskbarInteraction(FALSE);
