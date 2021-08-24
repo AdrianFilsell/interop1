@@ -57,13 +57,12 @@ bool CWebBrowser2::getjscript(CComPtr<IDispatch>& spDisp)
 	CComPtr<IDispatch> idoc = m_pCtrlSite ? get_Document() : NULL;
 	if( !idoc )
 		return false;
-	CComPtr<IHTMLDocument2>	htmldoc;
-	HRESULT hr = idoc->QueryInterface( IID_IHTMLDocument2, (void**)&htmldoc );
-	if( FAILED(hr) )
+	CComQIPtr<IHTMLDocument2> htmldoc(idoc);
+	if( !htmldoc )
 		return false;
 
 	// get the jscript
-	hr = htmldoc->get_Script( &spDisp );
+	const HRESULT hr = htmldoc->get_Script( &spDisp );
 	ATLASSERT( SUCCEEDED(hr) );
 	return SUCCEEDED(hr);
 }
