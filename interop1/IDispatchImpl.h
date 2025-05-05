@@ -9,6 +9,7 @@
 #include <string>
 #include <memory>
 #include <algorithm>
+#include <functional>
 
 // T - data type
 template <typename T> struct vectorptrsortpred : public std::binary_function<T, T, bool>
